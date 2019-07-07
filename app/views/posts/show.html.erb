@@ -24,6 +24,8 @@
     <div class="content">
       <%= @post.content %>
     </div>
+
+    <%= image_tag @post.photo %>
   </div>
 </section>
 
@@ -37,7 +39,7 @@
     </h2>
     <%= render @post.comments %>
     <div class="comment-form">
-      <hr>
+      <br><br><br>
       <h3 class="subtitle is-3"> 
         Leave a reply
       </h3>

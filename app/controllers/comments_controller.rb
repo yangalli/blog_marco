@@ -6,11 +6,9 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-  end
-
-  private
-
-  def comments_params
-
+    @post = Post.find_by(params[:post_id])
+    @comment = @post.comments.find(params[:id])
+    @comment.destroy
+    redirect_to post_path(@post)
   end
 end
