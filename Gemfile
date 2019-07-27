@@ -43,6 +43,9 @@ end
 
 gem 'bulma-rails', '~> 0.6.1'
 gem 'simple_form'
+gem 'devise'
+gem 'activeadmin'
+gem 'active_skin'
 
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
@@ -65,7 +68,6 @@ group :test do
 end
 
 group :production do
-  gem 'pg'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
