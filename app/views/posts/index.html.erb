@@ -1,20 +1,70 @@
 <%= content_for :page_title, "Frases Filosóficas" %>
 
+
 <section class="section">
   <div class="container">
+    <div class="panel-block">
+      <p class="control has-icons-left">
+        <input class="input is-small" type="text" placeholder="search">
+        <span class="icon is-small is-left">
+          <i class="fas fa-search" aria-hidden="true"></i>
+        </span>
+      </p>
+    </div>
+    
+    <h1>Posts | <%= link_to  "New category", new_category_path %> </h1>
+    <h1>Posts | <%= link_to  "New post", new_post_path %> </h1>
+    <br>
+    <br>
+    <br>
+    <nav class="panel">
+      <p class="panel-heading">
+        Categorias
+      </p>
+      <% Category.all.each do |cat| %>
+        <div class="panel-block">
+          <%= link_to cat.name, posts_path(category: cat.name), class: "button is-link is-outlined is-fullwidth" %>
+        </div>
+      <% end %>
+      
+      <label class="panel-block">
+        <input type="checkbox">
+        remember me
+      </label>
+    </nav>
+
+    <% Category.all.each do |cat| %>
+      <%= link_to cat.name, posts_path(category: cat.name) %>
+    <% end %>
+    <br>
+
+    <% Category.where(display_in_navbar: true).each do |cat| %>
+      <%= link_to cat.name, posts_path(category: cat.name) %>
+    <% end %>
+    <br>
+
     <% @posts.each do |post| %>
       <div class="card">
         <div class="card-content">
           <div class="media">
-            <div class="media-content">
-              <p class="title is-4">
+            <div class="media-content columns">
+              <div class="column title is-10">
                 <%= link_to post.title, post %>
-              </p>
+              </div>
+              <div class="column title is-2">
+                <p>Categorias</p>
+              </div>
             </div>
           </div>
 
-          <div class="content">
-            <%= post.content %>
+          <div class="content columns">
+            <p class="column is-10">
+              <%= post.content %>
+            </p>
+            <p class="column is-2 tag is-black">
+              <%= post.category.name %>
+            </p>
+            
           </div>
 
           <!-- <div class="comment-count">

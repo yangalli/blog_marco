@@ -1,14 +1,22 @@
 class PostsController < ApplicationController
   def index
-    @posts = Post.all.order("created_at DESC")
+    @categories = Category.all
+    if params.has_key?(:category)
+      @category = Category.find_by_name(params[:category])
+      @posts = Post.where(category: @category)
+    else
+      @posts = Post.all.order("created_at DESC")
+    end
   end
 
   def new
     @post = Post.new
+    @categories = Category.all.map{|c| [ c.name, c.id ] }
   end
 
   def create
     @post = Post.new(post_params)
+    @post.category_id = params[:category_id] 
 
     if @post.save
       redirect_to @post
@@ -23,6 +31,7 @@ class PostsController < ApplicationController
 
   def update
     @post = Post.find(params[:id])
+    @post.category_id = params[:category_id]
 
     if @post.update(post_params)
       redirect_to @post
@@ -33,6 +42,7 @@ class PostsController < ApplicationController
 
   def edit
     @post = Post.find(params[:id])
+    @categories = Category.all.map{|c| [ c.name, c.id ] }
   end
 
   def destroy
@@ -45,6 +55,6 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:title, :content, :photo)
+    params.require(:post).permit(:title, :content, :category_id, :photo)
   end
 end
